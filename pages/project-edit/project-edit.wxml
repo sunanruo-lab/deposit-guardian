@@ -1,1 +1,60 @@
-<view class="page"><view class="card"><view class="card-title">基础信息</view><view class="label">项目名称 *</view><input class="input" data-key="name" value="{{p.name}}" bindinput="set" placeholder="例如：上海静安一居室"/><view class="label">房屋地址 *</view><textarea class="textarea" data-key="address" value="{{p.address}}" bindinput="set" placeholder="填写详细地址"/><view class="grid"><view><view class="label">租客姓名 *</view><input class="input" data-key="tenant" value="{{p.tenant}}" bindinput="set"/></view><view><view class="label">房东/中介称呼</view><input class="input" data-key="landlord" value="{{p.landlord}}" bindinput="set"/></view></view><view class="grid"><view><view class="label">租赁开始 *</view><picker mode="date" value="{{p.startDate}}" data-key="startDate" bindchange="set"><view class="picker">{{p.startDate||'选择日期'}}</view></picker></view><view><view class="label">租赁结束 *</view><picker mode="date" value="{{p.endDate}}" data-key="endDate" bindchange="set"><view class="picker">{{p.endDate||'选择日期'}}</view></picker></view></view><view class="grid"><view><view class="label">月租金额（元）</view><input class="input" type="digit" data-key="rent" value="{{p.rent}}" bindinput="set"/></view><view><view class="label">押金金额（元）</view><input class="input" type="digit" data-key="deposit" value="{{p.deposit}}" bindinput="set"/></view></view><view class="label">当前阶段</view><picker range="{{stages}}" value="{{stageIndex}}" bindchange="stage"><view class="picker">{{p.stage}}</view></picker><view class="label">补充备注</view><textarea class="textarea" data-key="note" value="{{p.note}}" bindinput="set" placeholder="可记录合同编号、特殊约定等"/></view><button class="btn" bindtap="save">保存房屋档案</button><button wx:if="{{editing}}" class="btn danger" bindtap="del">删除房屋档案</button><app-disclaimer/></view>
+<view class="page">
+  <view class="card">
+    <view class="card-title">基础信息</view>
+
+    <view class="label">项目名称 *</view>
+    <input class="input" data-key="name" value="{{p.name}}" bindinput="onInput" placeholder="例如：上海静安一居室"></input>
+
+    <view class="label">房屋地址 *</view>
+    <textarea class="textarea" data-key="address" value="{{p.address}}" bindinput="onInput" placeholder="填写详细地址"></textarea>
+
+    <view class="grid">
+      <view>
+        <view class="label">租客姓名 *</view>
+        <input class="input" data-key="tenant" value="{{p.tenant}}" bindinput="onInput" placeholder="例如：张三"></input>
+      </view>
+      <view>
+        <view class="label">房东/中介称呼</view>
+        <input class="input" data-key="landlord" value="{{p.landlord}}" bindinput="onInput" placeholder="例如：李房东"></input>
+      </view>
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">租赁开始 *</view>
+        <picker mode="date" value="{{p.startDate}}" data-key="startDate" bindchange="onInput">
+          <view class="picker">{{p.startDate || '选择日期'}}</view>
+        </picker>
+      </view>
+      <view>
+        <view class="label">租赁结束 *</view>
+        <picker mode="date" value="{{p.endDate}}" data-key="endDate" bindchange="onInput">
+          <view class="picker">{{p.endDate || '选择日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">月租金额（元）</view>
+        <input class="input" type="digit" data-key="rent" value="{{p.rent}}" bindinput="onInput" placeholder="例如：3500"></input>
+      </view>
+      <view>
+        <view class="label">押金金额（元）</view>
+        <input class="input" type="digit" data-key="deposit" value="{{p.deposit}}" bindinput="onInput" placeholder="例如：3500"></input>
+      </view>
+    </view>
+
+    <view class="label">当前阶段</view>
+    <picker range="{{stages}}" value="{{stageIndex}}" bindchange="onStageChange">
+      <view class="picker">{{p.stage}}</view>
+    </picker>
+
+    <view class="label">补充备注</view>
+    <textarea class="textarea" data-key="note" value="{{p.note}}" bindinput="onInput" placeholder="可记录合同编号、特殊约定等"></textarea>
+  </view>
+
+  <button class="btn" bindtap="save">保存房屋档案</button>
+  <button wx:if="{{editing}}" class="btn danger" bindtap="del">删除房屋档案</button>
+  <app-disclaimer></app-disclaimer>
+</view>
