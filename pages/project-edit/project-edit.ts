@@ -20,29 +20,38 @@ Page({
     }
   },
 
-  markDirty() {
-    if (!this.data.dirty && typeof wx.enableAlertBeforeUnload === 'function') {
-      try {
-        wx.enableAlertBeforeUnload({ message: '当前修改尚未保存，确定退出？' });
-      } catch (err) {}
-    }
-  },
-
-  onInput(e: any) {
+  onFieldBlur(e: any) {
     const key = e.currentTarget.dataset.key;
     if (!key) return;
-    this.markDirty();
+    const value = e.detail.value;
+    if ((this.data.p as any)[key] === value) return;
+    this.setData({ [`p.${key}`]: value, dirty: true });
+  },
+
+  onDateChange(e: any) {
+    const key = e.currentTarget.dataset.key;
+    if (!key) return;
     this.setData({ [`p.${key}`]: e.detail.value, dirty: true });
   },
 
   onStageChange(e: any) {
-    this.markDirty();
     const i = Number(e.detail.value);
     this.setData({ 'p.stage': STAGES[i], stageIndex: i, dirty: true });
   },
 
-  save() {
-    const p: any = this.data.p;
+  save(e: any) {
+    const values = (e && e.detail && e.detail.value) || {};
+    const p: any = {
+      ...this.data.p,
+      name: values.name || '',
+      address: values.address || '',
+      tenant: values.tenant || '',
+      landlord: values.landlord || '',
+      rent: values.rent || 0,
+      deposit: values.deposit || 0,
+      note: values.note || ''
+    };
+
     if (!String(p.name || '').trim() || !String(p.address || '').trim() || !String(p.tenant || '').trim() || !p.startDate || !p.endDate) {
       wx.showToast({ title: '请完整填写必填项', icon: 'none' });
       return;
@@ -59,12 +68,7 @@ Page({
       return;
     }
     saveProject(p);
-    if (typeof wx.disableAlertBeforeUnload === 'function') {
-      try {
-        wx.disableAlertBeforeUnload();
-      } catch (err) {}
-    }
-    this.setData({ dirty: false });
+    this.setData({ p, dirty: false });
     wx.showToast({ title: '保存成功' });
     setTimeout(() => wx.navigateBack(), 500);
   },
@@ -77,11 +81,6 @@ Page({
       success: (r: any) => {
         if (r.confirm) {
           deleteProject(this.data.p.id);
-          if (typeof wx.disableAlertBeforeUnload === 'function') {
-            try {
-              wx.disableAlertBeforeUnload();
-            } catch (err) {}
-          }
           this.setData({ dirty: false });
           wx.navigateBack({ delta: 2 });
         }
