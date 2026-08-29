@@ -1,1 +1,58 @@
-<view class="page"><view class="hero"><view class="title">退租检查</view><view class="subtitle">沿用入住清单，逐项对照原始状态与照片。</view><view class="big">{{prog.pct}}%</view><button class="btn hero-btn" bindtap="goCheck">开始/继续逐项检查</button></view><view class="card"><view class="card-title">变化汇总（{{changes.length}}）</view><view wx:for="{{changes}}" wx:key="id" class="line"><text>{{item.room}} · {{item.itemName}}</text><text class="tag {{item.comparison==='新增损坏'?'risk':''}}">{{item.comparison}}</text></view><view class="muted" wx:if="{{!changes.length}}">暂无已标记变化的项目</view></view><view class="card"><view class="card-title">交接前核对</view><view class="between line"><text>钥匙归还</text><text class="tag {{unreturned.length?'risk':''}}">{{unreturned.length?'有未归还项':'已核对'}}</text></view><view class="between line"><text>最终表计读数</text><text class="tag {{missingMeters.length?'warn':''}}">{{missingMeters.length?'缺 '+missingMeters.length+' 项':'已核对'}}</text></view><button class="btn secondary small" data-path="keys" bindtap="go">检查钥匙</button><button class="btn secondary small" data-path="meters" bindtap="go">检查表计</button></view><view class="card"><view class="card-title">押金与交接</view><view class="label">实际返还押金（元）</view><input class="input" type="digit" data-k="depositReturned" value="{{depositReturned}}" bindinput="set"/><view class="label">未返还原因</view><textarea class="textarea" data-k="withheldReason" value="{{withheldReason}}" bindinput="set" placeholder="如全额返还可留空"/><view class="grid"><view><view class="label">退租交接日期</view><picker mode="date" data-k="date" value="{{date}}" bindchange="set"><view class="picker">{{date||'选择日期'}}</view></picker></view><view><view class="label">时间</view><picker mode="time" data-k="time" value="{{time}}" bindchange="set"><view class="picker">{{time||'选择时间'}}</view></picker></view></view><button class="btn" bindtap="save">保存退租交接信息</button></view><button class="btn secondary" data-path="confirm" bindtap="go">进入双方交接确认</button><app-disclaimer/></view>
+<view class="page">
+  <view class="hero">
+    <view class="title">退租检查</view>
+    <view class="subtitle">沿用入住清单，逐项对照原始状态与照片。</view>
+    <view class="big">{{prog.pct}}%</view>
+    <button class="btn hero-btn" bindtap="goCheck">开始/继续逐项检查</button>
+  </view>
+
+  <view class="card">
+    <view class="card-title">变化汇总（{{changes.length}}）</view>
+    <view wx:for="{{changes}}" wx:key="id" class="line">
+      <text>{{item.room}} · {{item.itemName}}</text>
+      <text class="tag {{item.comparison==='新增损坏' ? 'risk' : ''}}">{{item.comparison}}</text>
+    </view>
+    <view class="muted" wx:if="{{!changes.length}}">暂无已标记变化的项目</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">交接前核对</view>
+    <view class="between line"><text>钥匙归还</text><text class="tag {{unreturned.length ? 'risk' : ''}}">{{unreturned.length ? '有未归还项' : '已核对'}}</text></view>
+    <view class="between line"><text>最终表计读数</text><text class="tag {{missingMeters.length ? 'warn' : ''}}">{{missingMeters.length ? '缺 ' + missingMeters.length + ' 项' : '已核对'}}</text></view>
+    <button class="btn secondary small" data-path="keys" bindtap="go">检查钥匙</button>
+    <button class="btn secondary small" data-path="meters" bindtap="go">检查表计</button>
+  </view>
+
+  <view class="card">
+    <view class="card-title">押金与交接</view>
+
+    <view class="label">实际返还押金（元）</view>
+    <view class="field-control {{depositReturned ? '' : 'placeholder'}}" data-k="depositReturned" bindtap="editField">
+      {{depositReturned || '点击填写返还金额'}}
+    </view>
+
+    <view class="label">未返还原因</view>
+    <view class="field-control multi {{withheldReason ? '' : 'placeholder'}}" data-k="withheldReason" bindtap="editField">
+      {{withheldReason || '如全额返还可留空'}}
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">退租交接日期</view>
+        <picker mode="date" data-k="date" value="{{date}}" bindchange="set">
+          <view class="picker">{{date || '选择日期'}}</view>
+        </picker>
+      </view>
+      <view>
+        <view class="label">时间</view>
+        <picker mode="time" data-k="time" value="{{time}}" bindchange="set">
+          <view class="picker">{{time || '选择时间'}}</view>
+        </picker>
+      </view>
+    </view>
+    <button class="btn" bindtap="save">保存退租交接信息</button>
+  </view>
+
+  <button class="btn secondary" data-path="confirm" bindtap="go">进入双方交接确认</button>
+  <app-disclaimer></app-disclaimer>
+</view>
