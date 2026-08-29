@@ -1,0 +1,11 @@
+<view class="page">
+ <view class="hero"><view class="title">押金保卫局</view><view class="subtitle">年轻人的租房入住与退租交接助手</view><view class="slogan">入住时多留一张，退租时少扯一次。</view><button class="btn hero-btn" bindtap="create">＋ 创建新的房屋档案</button></view>
+ <block wx:if="{{active}}">
+  <view class="card" bindtap="open" data-id="{{active.id}}"><view class="between"><view class="card-title">最近使用</view><text class="tag">{{active.stage}}</text></view><view class="project-name">{{active.name}}</view><view class="muted">{{active.address}}</view><view class="between progress-head"><text>入住检查进度 {{prog.done}} / {{prog.total}}</text><text>{{prog.pct}}%</text></view><view class="progress"><view class="progress-in" style="width:{{prog.pct}}%"></view></view><view class="muted gap">尚有 {{prog.left}} 项未完成</view></view>
+  <view class="card"><view class="card-title">快速记录</view><view class="grid"><button class="quick" data-path="inspection" bindtap="go">入住检查</button><button class="quick" data-path="moveout" bindtap="go">退租检查</button><button class="quick" data-path="meters" bindtap="go">水电燃气</button><button class="quick" data-path="issues" bindtap="go">记录新问题</button></view></view>
+  <view class="card" wx:if="{{recentReport}}" bindtap="previewReport"><view class="between"><view><view class="card-title">最近交接报告</view><view>{{recentReport.type}}</view><view class="muted">{{recentReport.date}}</view></view><text class="stamp">查看</text></view></view>
+  <view class="card" wx:if="{{projects.length>1}}"><view class="card-title">其他最近档案</view><view wx:for="{{projects}}" wx:key="id" wx:if="{{index>0}}" class="list" bindtap="open" data-id="{{item.id}}"><text>{{item.name}}</text><text class="muted">›</text></view></view>
+ </block>
+ <view class="card empty" wx:else><view class="empty-icon">🗂️</view><view class="card-title">先建立你的第一份房屋档案</view><view class="muted">房屋现状、读数、钥匙、家具和问题照片都会集中保存在这里。</view><button class="btn" bindtap="create">开始建档</button></view>
+ <app-disclaimer/>
+</view>

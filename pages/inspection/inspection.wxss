@@ -1,0 +1,1 @@
+.icon-btn{display:inline-block;background:none;border:0;color:#7A817D;font-size:22rpx;padding:6rpx 10rpx}.icon-btn::after{border:0}.check-row{display:flex;justify-content:space-between;padding:24rpx 4rpx;border-bottom:1rpx solid #EEEAE2}.items{margin-top:18rpx}

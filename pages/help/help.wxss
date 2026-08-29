@@ -1,0 +1,1 @@
+.step{display:flex;flex-direction:column;gap:8rpx;padding:22rpx 0;border-bottom:1rpx solid #EEEAE2}.step .strong{color:#244A3D;font-weight:800}.step text,.tips{color:#7A817D;line-height:1.7}

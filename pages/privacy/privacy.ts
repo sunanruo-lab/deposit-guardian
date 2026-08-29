@@ -1,0 +1,1 @@
+Page({data:{first:false},onLoad(o:any){this.setData({first:o.first==='1'});},agree(){wx.setStorageSync('dg_privacy_seen',true);if(getCurrentPages().length>1)wx.navigateBack();else wx.switchTab({url:'/pages/home/home'});}})

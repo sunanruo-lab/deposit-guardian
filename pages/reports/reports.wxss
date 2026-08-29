@@ -1,0 +1,1 @@
+.stamp{border:3rpx solid #3F826D;color:#3F826D;padding:12rpx;transform:rotate(-6deg);font-size:22rpx;font-weight:800}.report-canvas{position:fixed;left:-2000px;top:0;width:750px;height:1100px;opacity:.01;pointer-events:none}

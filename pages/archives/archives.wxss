@@ -1,0 +1,1 @@
+.filters{display:flex;align-items:center;gap:14rpx;margin-top:18rpx}.filters picker{flex:1}.project{font-size:32rpx;font-weight:800}.phead{font-size:23rpx;margin:20rpx 0 10rpx}

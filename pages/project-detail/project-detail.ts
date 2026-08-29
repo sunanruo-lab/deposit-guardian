@@ -1,0 +1,2 @@
+import { getProject } from '../../utils/storage';import { progress } from '../../utils/project';
+Page({data:{id:'',p:null as any,inProg:{},outProg:{}},onLoad(o:any){this.setData({id:o.id});},onShow(){const p=getProject(this.data.id);if(!p){wx.showToast({title:'档案不存在',icon:'none'});return;}this.setData({p,inProg:progress(p,'入住'),outProg:progress(p,'退租')});},go(e:any){const path=e.currentTarget.dataset.path;wx.navigateTo({url:`/pages/${path}/${path}?id=${this.data.id}`});},edit(){wx.navigateTo({url:`/pages/project-edit/project-edit?id=${this.data.id}`});}});

@@ -1,0 +1,16 @@
+{
+  "description": "押金保卫局 - 原生微信小程序",
+  "packOptions": { "ignore": [] },
+  "setting": {
+    "useCompilerPlugins": ["typescript"],
+    "es6": true,
+    "enhance": true,
+    "compileHotReLoad": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.7.10",
+  "appid": "touristappid",
+  "projectname": "deposit-guardian",
+  "miniprogramRoot": "./"
+}
