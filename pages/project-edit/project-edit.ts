@@ -20,12 +20,37 @@ Page({
     }
   },
 
-  onFieldBlur(e: any) {
-    const key = e.currentTarget.dataset.key;
-    if (!key) return;
-    const value = e.detail.value;
-    if ((this.data.p as any)[key] === value) return;
+  setProjectField(key: string, value: any) {
     this.setData({ [`p.${key}`]: value, dirty: true });
+    return value;
+  },
+
+  onNameInput(e: any) {
+    return this.setProjectField('name', e.detail.value);
+  },
+
+  onAddressInput(e: any) {
+    return this.setProjectField('address', e.detail.value);
+  },
+
+  onTenantInput(e: any) {
+    return this.setProjectField('tenant', e.detail.value);
+  },
+
+  onLandlordInput(e: any) {
+    return this.setProjectField('landlord', e.detail.value);
+  },
+
+  onRentInput(e: any) {
+    return this.setProjectField('rent', e.detail.value);
+  },
+
+  onDepositInput(e: any) {
+    return this.setProjectField('deposit', e.detail.value);
+  },
+
+  onNoteInput(e: any) {
+    return this.setProjectField('note', e.detail.value);
   },
 
   onDateChange(e: any) {
@@ -43,13 +68,13 @@ Page({
     const values = (e && e.detail && e.detail.value) || {};
     const p: any = {
       ...this.data.p,
-      name: values.name || '',
-      address: values.address || '',
-      tenant: values.tenant || '',
-      landlord: values.landlord || '',
-      rent: values.rent || 0,
-      deposit: values.deposit || 0,
-      note: values.note || ''
+      name: values.name || this.data.p.name || '',
+      address: values.address || this.data.p.address || '',
+      tenant: values.tenant || this.data.p.tenant || '',
+      landlord: values.landlord || this.data.p.landlord || '',
+      rent: values.rent || this.data.p.rent || 0,
+      deposit: values.deposit || this.data.p.deposit || 0,
+      note: values.note || this.data.p.note || ''
     };
 
     if (!String(p.name || '').trim() || !String(p.address || '').trim() || !String(p.tenant || '').trim() || !p.startDate || !p.endDate) {
