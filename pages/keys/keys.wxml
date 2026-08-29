@@ -1,1 +1,61 @@
-<view class="page"><view class="hero"><view class="title">钥匙与门禁</view><view class="subtitle">记录入住收到和退租归还的数量。</view></view><view class="card" wx:for="{{items}}" wx:key="id"><view class="between"><view class="card-title">{{item.name}}</view><text class="tag {{item.isReturned?'':'warn'}}">{{item.isReturned?'已归还':'待归还'}}</text></view><view class="grid"><view>入住收到：<text class="strong">{{item.received}}</text></view><view>退租归还：<text class="strong">{{item.returned}}</text></view></view><view class="muted">{{item.note||'无备注'}}</view><image wx:if="{{item.photo}}" class="photo" src="{{item.photo.path}}" mode="aspectFill"/><button class="btn secondary small" data-id="{{item.id}}" bindtap="edit">编辑</button><button class="btn danger small" data-id="{{item.id}}" bindtap="del">删除</button></view><view class="card" wx:if="{{show}}"><view class="card-title">{{d.id?'编辑':'新增'}}钥匙/门禁</view><view class="label">常用类型</view><picker range="{{templates}}" value="{{templateIndex}}" bindchange="pick"><view class="picker">{{d.name}}</view></picker><view class="label">名称（可自定义）</view><input class="input" data-k="name" value="{{d.name}}" bindinput="set"/><view class="grid"><view><view class="label">入住收到数量</view><input class="input" type="number" data-k="received" value="{{d.received}}" bindinput="set"/></view><view><view class="label">退租归还数量</view><input class="input" type="number" data-k="returned" value="{{d.returned}}" bindinput="set"/></view></view><view class="label">备注</view><textarea class="textarea" data-k="note" value="{{d.note}}" bindinput="set"/><view class="between"><text>已经归还</text><switch color="#3F826D" checked="{{d.isReturned}}" bindchange="toggle"/></view><button class="btn secondary" bindtap="photo">拍照或选择照片</button><button class="btn" bindtap="save">保存记录</button></view><button class="btn" wx:if="{{!show}}" bindtap="add">＋ 添加钥匙或门禁</button><app-disclaimer/></view>
+<view class="page">
+  <view class="hero">
+    <view class="title">钥匙与门禁</view>
+    <view class="subtitle">记录入住收到和退租归还的数量。</view>
+  </view>
+
+  <view class="card" wx:for="{{items}}" wx:key="id">
+    <view class="between">
+      <view class="card-title">{{item.name}}</view>
+      <text class="tag {{item.isReturned ? '' : 'warn'}}">{{item.isReturned ? '已归还' : '待归还'}}</text>
+    </view>
+    <view class="grid">
+      <view>入住收到：<text class="strong">{{item.received}}</text></view>
+      <view>退租归还：<text class="strong">{{item.returned}}</text></view>
+    </view>
+    <view class="muted">{{item.note || '无备注'}}</view>
+    <image wx:if="{{item.photo}}" class="photo" src="{{item.photo.path}}" mode="aspectFill" />
+    <button class="btn secondary small" data-id="{{item.id}}" bindtap="edit">编辑</button>
+    <button class="btn danger small" data-id="{{item.id}}" bindtap="del">删除</button>
+  </view>
+
+  <view class="card" wx:if="{{show}}">
+    <view class="card-title">{{d.id ? '编辑' : '新增'}}钥匙/门禁</view>
+
+    <view class="label">常用类型</view>
+    <picker range="{{templates}}" value="{{templateIndex}}" bindchange="pick">
+      <view class="picker">{{d.name}}</view>
+    </picker>
+
+    <view class="label">名称（可自定义）</view>
+    <view class="field-control {{d.name ? '' : 'placeholder'}}" data-k="name" bindtap="editField">
+      {{d.name || '点击填写名称'}}
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">入住收到数量</view>
+        <view class="field-control" data-k="received" bindtap="editField">{{d.received}}</view>
+      </view>
+      <view>
+        <view class="label">退租归还数量</view>
+        <view class="field-control" data-k="returned" bindtap="editField">{{d.returned}}</view>
+      </view>
+    </view>
+
+    <view class="label">备注</view>
+    <view class="field-control multi {{d.note ? '' : 'placeholder'}}" data-k="note" bindtap="editField">
+      {{d.note || '点击填写备注'}}
+    </view>
+
+    <view class="between">
+      <text>已经归还</text>
+      <switch color="#3F826D" checked="{{d.isReturned}}" bindchange="toggle" />
+    </view>
+    <button class="btn secondary" bindtap="photo">拍照或选择照片</button>
+    <button class="btn" bindtap="save">保存记录</button>
+  </view>
+
+  <button class="btn" wx:if="{{!show}}" bindtap="add">＋ 添加钥匙或门禁</button>
+  <app-disclaimer></app-disclaimer>
+</view>
