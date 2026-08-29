@@ -1,3 +1,43 @@
-<view class="page"><view class="between"><view class="title">房屋档案</view><button class="btn small" bindtap="create">＋ 新建</button></view><view class="card"><input class="input" placeholder="搜索项目名称或地址" value="{{q}}" bindinput="input"/><view class="filters"><picker range="{{stages}}" value="{{stageIndex}}" bindchange="stageChange"><view class="picker">{{stage}}</view></picker><button class="btn secondary small" bindtap="toggleSort">创建时间 {{sortDesc?'↓':'↑'}}</button></view></view>
-<view wx:for="{{items}}" wx:key="id" class="card"><view bindtap="open" data-id="{{item.id}}"><view class="between"><view class="project">{{item.name}}</view><text class="tag">{{item.stage}}</text></view><view class="muted">{{item.address}}</view><view class="between phead"><text>完成度</text><text>{{item.prog}}%</text></view><view class="progress"><view class="progress-in" style="width:{{item.prog}}%"></view></view></view><view class="divider"></view><button class="btn small" bindtap="open" data-id="{{item.id}}">继续检查</button><button class="btn secondary small" bindtap="edit" data-id="{{item.id}}">编辑</button><button class="btn secondary small" bindtap="copy" data-id="{{item.id}}">复制</button><button class="btn danger small" bindtap="del" data-id="{{item.id}}">删除</button></view>
-<view class="card empty" wx:if="{{!items.length}}"><view class="empty-icon">📁</view><view>没有符合条件的房屋档案</view><button class="btn" bindtap="create">创建第一份档案</button></view><app-disclaimer/></view>
+<view class="page">
+  <view class="between">
+    <view class="title">房屋档案</view>
+    <button class="btn small" bindtap="create">＋ 新建</button>
+  </view>
+
+  <view class="card">
+    <view class="field-control {{q ? '' : 'placeholder'}}" bindtap="editSearch">
+      {{q || '点击搜索项目名称或地址'}}
+    </view>
+    <view class="filters">
+      <picker range="{{stages}}" value="{{stageIndex}}" bindchange="stageChange">
+        <view class="picker">{{stage}}</view>
+      </picker>
+      <button class="btn secondary small" bindtap="toggleSort">创建时间 {{sortDesc ? '↓' : '↑'}}</button>
+      <button class="btn secondary small" wx:if="{{q}}" bindtap="clearSearch">清空搜索</button>
+    </view>
+  </view>
+
+  <view wx:for="{{items}}" wx:key="id" class="card">
+    <view bindtap="open" data-id="{{item.id}}">
+      <view class="between">
+        <view class="project">{{item.name}}</view>
+        <text class="tag">{{item.stage}}</text>
+      </view>
+      <view class="muted">{{item.address}}</view>
+      <view class="between phead"><text>完成度</text><text>{{item.prog}}%</text></view>
+      <view class="progress"><view class="progress-in" style="width:{{item.prog}}%"></view></view>
+    </view>
+    <view class="divider"></view>
+    <button class="btn small" bindtap="open" data-id="{{item.id}}">继续检查</button>
+    <button class="btn secondary small" bindtap="edit" data-id="{{item.id}}">编辑</button>
+    <button class="btn secondary small" bindtap="copy" data-id="{{item.id}}">复制</button>
+    <button class="btn danger small" bindtap="del" data-id="{{item.id}}">删除</button>
+  </view>
+
+  <view class="card empty" wx:if="{{!items.length}}">
+    <view class="empty-icon">📁</view>
+    <view>没有符合条件的房屋档案</view>
+    <button class="btn" bindtap="create">创建第一份档案</button>
+  </view>
+  <app-disclaimer></app-disclaimer>
+</view>
