@@ -1,1 +1,3 @@
-
+.field-control{position:relative;z-index:1;min-height:88rpx;line-height:44rpx;width:100%;background:#F7F3EA;border-radius:16rpx;padding:22rpx;border:1rpx solid #E5E1D8;color:#252A28;font-size:28rpx;word-break:break-all}
+.field-control.multi{min-height:140rpx;line-height:42rpx}
+.field-control.placeholder{color:#9EA49F}
