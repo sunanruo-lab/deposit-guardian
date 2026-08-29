@@ -1,1 +1,99 @@
-<view class="page"><view class="hero"><view class="title">问题档案</view><view class="subtitle">所有入住与退租问题集中归档。</view></view><view class="card filters"><picker range="{{phases}}" value="{{phaseIndex}}" data-k="phaseIndex" bindchange="pickFilter"><view class="picker">{{phases[phaseIndex]}}</view></picker><picker range="{{sevs}}" value="{{sevIndex}}" data-k="sevIndex" bindchange="pickFilter"><view class="picker">{{sevs[sevIndex]}}</view></picker><picker range="{{states}}" value="{{stateIndex}}" data-k="stateIndex" bindchange="pickFilter"><view class="picker">{{states[stateIndex]}}</view></picker></view><view class="card" wx:for="{{items}}" wx:key="id"><view class="row"><image wx:if="{{item.cover}}" class="cover" src="{{item.cover}}" mode="aspectFill"/><view class="grow"><view class="between"><view class="card-title">{{item.itemName}}</view><text class="tag {{item.resolved?'':'risk'}}">{{item.resolved?'已解决':'未解决'}}</text></view><view>{{item.room}} · {{item.phase}} · {{item.severity}}</view><view class="muted">{{item.date}}</view></view></view><view class="desc">{{item.description}}</view><view class="muted">{{item.resolved?item.resolution:''}}</view><button class="btn secondary small" bindtap="toggle" data-id="{{item.id}}">{{item.resolved?'标记未解决':'标记已解决'}}</button><button class="btn secondary small" bindtap="edit" data-id="{{item.id}}">编辑</button><button class="btn danger small" bindtap="del" data-id="{{item.id}}">删除</button></view><view class="card" wx:if="{{show}}"><view class="card-title">{{d.id?'编辑':'记录新'}}问题</view><view class="grid"><view><view class="label">所属房间</view><input class="input" data-k="room" value="{{d.room}}" bindinput="set"/></view><view><view class="label">检查项目/问题名称</view><input class="input" data-k="itemName" value="{{d.itemName}}" bindinput="set"/></view><view><view class="label">问题类型</view><input class="input" data-k="type" value="{{d.type}}" bindinput="set"/></view><view><view class="label">阶段</view><picker range="{{phaseOpts}}" value="{{phaseEditIndex}}" bindchange="phase"><view class="picker">{{d.phase}}</view></picker></view><view><view class="label">严重程度</view><picker range="{{severities}}" value="{{severityIndex}}" bindchange="severity"><view class="picker">{{d.severity}}</view></picker></view></view><view class="label">问题描述</view><textarea class="textarea" data-k="description" value="{{d.description}}" bindinput="set"/><view class="between"><text>已经解决</text><switch color="#3F826D" checked="{{d.resolved}}" bindchange="resolved"/></view><view class="label">解决说明</view><textarea class="textarea" data-k="resolution" value="{{d.resolution}}" bindinput="set"/><view class="photo-grid"><view wx:for="{{d.photos}}" wx:key="id" class="photo-wrap"><image class="photo" src="{{item.path}}" mode="aspectFill"/><text class="photo-del" bindtap="delPhoto" data-i="{{index}}">×</text></view></view><button class="btn secondary" bindtap="photos">添加现场照片</button><button class="btn" bindtap="save">保存问题档案</button></view><button class="btn" wx:if="{{!show}}" bindtap="add">＋ 记录新问题</button><view class="card empty" wx:if="{{!items.length&&!show}}"><view class="empty-icon">🏷️</view><view>当前筛选下没有问题记录</view></view><app-disclaimer/></view>
+<view class="page">
+  <view class="hero">
+    <view class="title">问题档案</view>
+    <view class="subtitle">所有入住与退租问题集中归档。</view>
+  </view>
+
+  <view class="card filters">
+    <picker range="{{phases}}" value="{{phaseIndex}}" data-k="phaseIndex" bindchange="pickFilter">
+      <view class="picker">{{phases[phaseIndex]}}</view>
+    </picker>
+    <picker range="{{sevs}}" value="{{sevIndex}}" data-k="sevIndex" bindchange="pickFilter">
+      <view class="picker">{{sevs[sevIndex]}}</view>
+    </picker>
+    <picker range="{{states}}" value="{{stateIndex}}" data-k="stateIndex" bindchange="pickFilter">
+      <view class="picker">{{states[stateIndex]}}</view>
+    </picker>
+  </view>
+
+  <view class="card" wx:for="{{items}}" wx:key="id">
+    <view class="row">
+      <image wx:if="{{item.cover}}" class="cover" src="{{item.cover}}" mode="aspectFill" />
+      <view class="grow">
+        <view class="between">
+          <view class="card-title">{{item.itemName}}</view>
+          <text class="tag {{item.resolved ? '' : 'risk'}}">{{item.resolved ? '已解决' : '未解决'}}</text>
+        </view>
+        <view>{{item.room}} · {{item.phase}} · {{item.severity}}</view>
+        <view class="muted">{{item.date}}</view>
+      </view>
+    </view>
+    <view class="desc">{{item.description}}</view>
+    <view class="muted">{{item.resolved ? item.resolution : ''}}</view>
+    <button class="btn secondary small" bindtap="toggle" data-id="{{item.id}}">{{item.resolved ? '标记未解决' : '标记已解决'}}</button>
+    <button class="btn secondary small" bindtap="edit" data-id="{{item.id}}">编辑</button>
+    <button class="btn danger small" bindtap="del" data-id="{{item.id}}">删除</button>
+  </view>
+
+  <view class="card" wx:if="{{show}}">
+    <view class="card-title">{{d.id ? '编辑' : '记录新'}}问题</view>
+
+    <view class="grid">
+      <view>
+        <view class="label">所属房间</view>
+        <view class="field-control {{d.room ? '' : 'placeholder'}}" data-k="room" bindtap="editField">{{d.room || '点击填写房间'}}</view>
+      </view>
+      <view>
+        <view class="label">检查项目/问题名称</view>
+        <view class="field-control {{d.itemName ? '' : 'placeholder'}}" data-k="itemName" bindtap="editField">{{d.itemName || '点击填写名称'}}</view>
+      </view>
+      <view>
+        <view class="label">问题类型</view>
+        <view class="field-control {{d.type ? '' : 'placeholder'}}" data-k="type" bindtap="editField">{{d.type || '点击填写类型'}}</view>
+      </view>
+      <view>
+        <view class="label">阶段</view>
+        <picker range="{{phaseOpts}}" value="{{phaseEditIndex}}" bindchange="phase">
+          <view class="picker">{{d.phase}}</view>
+        </picker>
+      </view>
+      <view>
+        <view class="label">严重程度</view>
+        <picker range="{{severities}}" value="{{severityIndex}}" bindchange="severity">
+          <view class="picker">{{d.severity}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="label">问题描述</view>
+    <view class="field-control multi {{d.description ? '' : 'placeholder'}}" data-k="description" bindtap="editField">
+      {{d.description || '点击填写问题描述'}}
+    </view>
+
+    <view class="between">
+      <text>已经解决</text>
+      <switch color="#3F826D" checked="{{d.resolved}}" bindchange="resolved" />
+    </view>
+
+    <view class="label">解决说明</view>
+    <view class="field-control multi {{d.resolution ? '' : 'placeholder'}}" data-k="resolution" bindtap="editField">
+      {{d.resolution || '点击填写解决说明'}}
+    </view>
+
+    <view class="photo-grid">
+      <view wx:for="{{d.photos}}" wx:key="id" class="photo-wrap">
+        <image class="photo" src="{{item.path}}" mode="aspectFill" />
+        <text class="photo-del" bindtap="delPhoto" data-i="{{index}}">×</text>
+      </view>
+    </view>
+    <button class="btn secondary" bindtap="photos">添加现场照片</button>
+    <button class="btn" bindtap="save">保存问题档案</button>
+  </view>
+
+  <button class="btn" wx:if="{{!show}}" bindtap="add">＋ 记录新问题</button>
+  <view class="card empty" wx:if="{{!items.length&&!show}}">
+    <view class="empty-icon">🏷️</view>
+    <view>当前筛选下没有问题记录</view>
+  </view>
+  <app-disclaimer></app-disclaimer>
+</view>
