@@ -8,8 +8,9 @@
         class="input"
         name="name"
         value="{{p.name}}"
-        data-key="name"
-        bindblur="onFieldBlur"
+        bindinput="onNameInput"
+        cursor-spacing="80"
+        adjust-position="true"
         placeholder="例如：上海静安一居室"
       />
 
@@ -18,8 +19,9 @@
         class="textarea"
         name="address"
         value="{{p.address}}"
-        data-key="address"
-        bindblur="onFieldBlur"
+        bindinput="onAddressInput"
+        cursor-spacing="80"
+        adjust-position="true"
         placeholder="填写详细地址"
       />
 
@@ -30,8 +32,9 @@
             class="input"
             name="tenant"
             value="{{p.tenant}}"
-            data-key="tenant"
-            bindblur="onFieldBlur"
+            bindinput="onTenantInput"
+            cursor-spacing="80"
+            adjust-position="true"
             placeholder="例如：张三"
           />
         </view>
@@ -41,8 +44,9 @@
             class="input"
             name="landlord"
             value="{{p.landlord}}"
-            data-key="landlord"
-            bindblur="onFieldBlur"
+            bindinput="onLandlordInput"
+            cursor-spacing="80"
+            adjust-position="true"
             placeholder="例如：李房东"
           />
         </view>
@@ -71,8 +75,9 @@
             type="digit"
             name="rent"
             value="{{p.rent}}"
-            data-key="rent"
-            bindblur="onFieldBlur"
+            bindinput="onRentInput"
+            cursor-spacing="80"
+            adjust-position="true"
             placeholder="例如：3500"
           />
         </view>
@@ -83,8 +88,9 @@
             type="digit"
             name="deposit"
             value="{{p.deposit}}"
-            data-key="deposit"
-            bindblur="onFieldBlur"
+            bindinput="onDepositInput"
+            cursor-spacing="80"
+            adjust-position="true"
             placeholder="例如：3500"
           />
         </view>
@@ -100,8 +106,9 @@
         class="textarea"
         name="note"
         value="{{p.note}}"
-        data-key="note"
-        bindblur="onFieldBlur"
+        bindinput="onNoteInput"
+        cursor-spacing="80"
+        adjust-position="true"
         placeholder="可记录合同编号、特殊约定等"
       />
     </view>
