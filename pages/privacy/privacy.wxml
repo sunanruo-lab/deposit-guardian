@@ -1,1 +1,23 @@
-<view class="page"><view class="hero"><view class="title">隐私说明</view><view class="subtitle">先说清楚：你的租房照片不会被我们自动上传。</view></view><view class="card"><view class="point">✓ 不使用 AI 接口</view><view class="point">✓ 第一版不需要注册或登录</view><view class="point">✓ 不读取微信聊天记录</view><view class="point">✓ 不读取支付记录</view><view class="point">✓ 不自动上传房屋照片</view><view class="point">✓ 数据主要保存在当前设备</view><view class="divider"></view><view class="warning">删除小程序或清理微信数据可能导致本地记录丢失。建议定期导出 JSON 备份，并将生成的报告保存到手机相册。</view><view class="muted para">只有在你主动拍照、选择照片或保存报告时，小程序才会调用相应的微信能力。保存相册权限被拒绝时，你可以前往微信设置重新开启。</view></view><button class="btn" wx:if="{{first}}" bindtap="agree">我已了解，开始使用</button><app-disclaimer/></view>
+<view class="page">
+  <view class="hero">
+    <view class="title">隐私说明</view>
+    <view class="subtitle">先说清楚：你的租房照片不会被我们自动上传。</view>
+  </view>
+
+  <view class="card">
+    <view class="point">不使用 AI 接口</view>
+    <view class="point">第一版不需要注册或登录</view>
+    <view class="point">不读取微信聊天记录</view>
+    <view class="point">不读取支付记录</view>
+    <view class="point">不自动上传房屋照片</view>
+    <view class="point">数据主要保存在当前设备</view>
+
+    <view class="divider"></view>
+
+    <view class="warning">删除小程序或清理微信数据可能导致本地记录丢失。建议定期导出 JSON 备份，并将生成的报告保存到手机相册。</view>
+    <view class="muted para">只有在你主动拍照、选择照片或保存报告时，小程序才会调用相应的微信能力。保存相册权限被拒绝时，你可以前往微信设置重新开启。</view>
+  </view>
+
+  <button class="btn" wx:if="{{first}}" bindtap="agree">我已了解，开始使用</button>
+  <app-disclaimer></app-disclaimer>
+</view>
