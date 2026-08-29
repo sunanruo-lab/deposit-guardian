@@ -2,6 +2,16 @@ import { emptyProject } from '../../utils/project';
 import { getProject, saveProject, deleteProject } from '../../utils/storage';
 import { STAGES } from '../../utils/constants';
 
+const FIELD_META: any = {
+  name: { title: '项目名称', placeholder: '例如：上海静安一居室' },
+  address: { title: '房屋地址', placeholder: '填写详细地址' },
+  tenant: { title: '租客姓名', placeholder: '例如：张三' },
+  landlord: { title: '房东/中介称呼', placeholder: '例如：李房东' },
+  rent: { title: '月租金额', placeholder: '例如：3500' },
+  deposit: { title: '押金金额', placeholder: '例如：3500' },
+  note: { title: '补充备注', placeholder: '可记录合同编号、特殊约定等' }
+};
+
 Page({
   data: {
     p: emptyProject(),
@@ -20,37 +30,25 @@ Page({
     }
   },
 
-  setProjectField(key: string, value: any) {
-    this.setData({ [`p.${key}`]: value, dirty: true });
-    return value;
-  },
+  editText(e: any) {
+    const key = e.currentTarget.dataset.key;
+    const meta = FIELD_META[key];
+    if (!meta) return;
+    const current = String((this.data.p as any)[key] || '');
 
-  onNameInput(e: any) {
-    return this.setProjectField('name', e.detail.value);
-  },
-
-  onAddressInput(e: any) {
-    return this.setProjectField('address', e.detail.value);
-  },
-
-  onTenantInput(e: any) {
-    return this.setProjectField('tenant', e.detail.value);
-  },
-
-  onLandlordInput(e: any) {
-    return this.setProjectField('landlord', e.detail.value);
-  },
-
-  onRentInput(e: any) {
-    return this.setProjectField('rent', e.detail.value);
-  },
-
-  onDepositInput(e: any) {
-    return this.setProjectField('deposit', e.detail.value);
-  },
-
-  onNoteInput(e: any) {
-    return this.setProjectField('note', e.detail.value);
+    wx.showModal({
+      title: meta.title,
+      content: current,
+      editable: true,
+      placeholderText: meta.placeholder,
+      confirmText: '保存',
+      cancelText: '取消',
+      success: (res: any) => {
+        if (!res.confirm) return;
+        const value = typeof res.content === 'string' ? res.content : '';
+        this.setData({ [`p.${key}`]: value, dirty: true });
+      }
+    });
   },
 
   onDateChange(e: any) {
@@ -64,18 +62,8 @@ Page({
     this.setData({ 'p.stage': STAGES[i], stageIndex: i, dirty: true });
   },
 
-  save(e: any) {
-    const values = (e && e.detail && e.detail.value) || {};
-    const p: any = {
-      ...this.data.p,
-      name: values.name || this.data.p.name || '',
-      address: values.address || this.data.p.address || '',
-      tenant: values.tenant || this.data.p.tenant || '',
-      landlord: values.landlord || this.data.p.landlord || '',
-      rent: values.rent || this.data.p.rent || 0,
-      deposit: values.deposit || this.data.p.deposit || 0,
-      note: values.note || this.data.p.note || ''
-    };
+  save() {
+    const p: any = { ...this.data.p };
 
     if (!String(p.name || '').trim() || !String(p.address || '').trim() || !String(p.tenant || '').trim() || !p.startDate || !p.endDate) {
       wx.showToast({ title: '请完整填写必填项', icon: 'none' });
