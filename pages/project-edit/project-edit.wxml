@@ -1,121 +1,74 @@
 <view class="page">
-  <form bindsubmit="save">
-    <view class="card">
-      <view class="card-title">基础信息</view>
+  <view class="card">
+    <view class="card-title">基础信息</view>
 
-      <view class="label">项目名称 *</view>
-      <input
-        class="input"
-        name="name"
-        value="{{p.name}}"
-        bindinput="onNameInput"
-        cursor-spacing="80"
-        adjust-position="true"
-        placeholder="例如：上海静安一居室"
-      />
-
-      <view class="label">房屋地址 *</view>
-      <textarea
-        class="textarea"
-        name="address"
-        value="{{p.address}}"
-        bindinput="onAddressInput"
-        cursor-spacing="80"
-        adjust-position="true"
-        placeholder="填写详细地址"
-      />
-
-      <view class="grid">
-        <view>
-          <view class="label">租客姓名 *</view>
-          <input
-            class="input"
-            name="tenant"
-            value="{{p.tenant}}"
-            bindinput="onTenantInput"
-            cursor-spacing="80"
-            adjust-position="true"
-            placeholder="例如：张三"
-          />
-        </view>
-        <view>
-          <view class="label">房东/中介称呼</view>
-          <input
-            class="input"
-            name="landlord"
-            value="{{p.landlord}}"
-            bindinput="onLandlordInput"
-            cursor-spacing="80"
-            adjust-position="true"
-            placeholder="例如：李房东"
-          />
-        </view>
-      </view>
-
-      <view class="grid">
-        <view>
-          <view class="label">租赁开始 *</view>
-          <picker mode="date" value="{{p.startDate}}" data-key="startDate" bindchange="onDateChange">
-            <view class="picker">{{p.startDate || '选择日期'}}</view>
-          </picker>
-        </view>
-        <view>
-          <view class="label">租赁结束 *</view>
-          <picker mode="date" value="{{p.endDate}}" data-key="endDate" bindchange="onDateChange">
-            <view class="picker">{{p.endDate || '选择日期'}}</view>
-          </picker>
-        </view>
-      </view>
-
-      <view class="grid">
-        <view>
-          <view class="label">月租金额（元）</view>
-          <input
-            class="input"
-            type="digit"
-            name="rent"
-            value="{{p.rent}}"
-            bindinput="onRentInput"
-            cursor-spacing="80"
-            adjust-position="true"
-            placeholder="例如：3500"
-          />
-        </view>
-        <view>
-          <view class="label">押金金额（元）</view>
-          <input
-            class="input"
-            type="digit"
-            name="deposit"
-            value="{{p.deposit}}"
-            bindinput="onDepositInput"
-            cursor-spacing="80"
-            adjust-position="true"
-            placeholder="例如：3500"
-          />
-        </view>
-      </view>
-
-      <view class="label">当前阶段</view>
-      <picker range="{{stages}}" value="{{stageIndex}}" bindchange="onStageChange">
-        <view class="picker">{{p.stage}}</view>
-      </picker>
-
-      <view class="label">补充备注</view>
-      <textarea
-        class="textarea"
-        name="note"
-        value="{{p.note}}"
-        bindinput="onNoteInput"
-        cursor-spacing="80"
-        adjust-position="true"
-        placeholder="可记录合同编号、特殊约定等"
-      />
+    <view class="label">项目名称 *</view>
+    <view class="field-control {{p.name ? '' : 'placeholder'}}" data-key="name" bindtap="editText">
+      {{p.name || '点击填写项目名称'}}
     </view>
 
-    <button class="btn" form-type="submit">保存房屋档案</button>
-  </form>
+    <view class="label">房屋地址 *</view>
+    <view class="field-control multi {{p.address ? '' : 'placeholder'}}" data-key="address" bindtap="editText">
+      {{p.address || '点击填写详细地址'}}
+    </view>
 
+    <view class="grid">
+      <view>
+        <view class="label">租客姓名 *</view>
+        <view class="field-control {{p.tenant ? '' : 'placeholder'}}" data-key="tenant" bindtap="editText">
+          {{p.tenant || '点击填写租客姓名'}}
+        </view>
+      </view>
+      <view>
+        <view class="label">房东/中介称呼</view>
+        <view class="field-control {{p.landlord ? '' : 'placeholder'}}" data-key="landlord" bindtap="editText">
+          {{p.landlord || '点击填写称呼'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">租赁开始 *</view>
+        <picker mode="date" value="{{p.startDate}}" data-key="startDate" bindchange="onDateChange">
+          <view class="picker">{{p.startDate || '选择日期'}}</view>
+        </picker>
+      </view>
+      <view>
+        <view class="label">租赁结束 *</view>
+        <picker mode="date" value="{{p.endDate}}" data-key="endDate" bindchange="onDateChange">
+          <view class="picker">{{p.endDate || '选择日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="grid">
+      <view>
+        <view class="label">月租金额（元）</view>
+        <view class="field-control {{p.rent ? '' : 'placeholder'}}" data-key="rent" bindtap="editText">
+          {{p.rent || '点击填写金额'}}
+        </view>
+      </view>
+      <view>
+        <view class="label">押金金额（元）</view>
+        <view class="field-control {{p.deposit ? '' : 'placeholder'}}" data-key="deposit" bindtap="editText">
+          {{p.deposit || '点击填写金额'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="label">当前阶段</view>
+    <picker range="{{stages}}" value="{{stageIndex}}" bindchange="onStageChange">
+      <view class="picker">{{p.stage}}</view>
+    </picker>
+
+    <view class="label">补充备注</view>
+    <view class="field-control multi {{p.note ? '' : 'placeholder'}}" data-key="note" bindtap="editText">
+      {{p.note || '点击填写合同编号、特殊约定等'}}
+    </view>
+  </view>
+
+  <button class="btn" bindtap="save">保存房屋档案</button>
   <button wx:if="{{editing}}" class="btn danger" bindtap="del">删除房屋档案</button>
   <app-disclaimer></app-disclaimer>
 </view>
